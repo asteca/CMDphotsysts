@@ -22,7 +22,7 @@ def frmtFile(now_time, version, systs):
     Create the new (most recent) version of the photometric systems file.
     """
     replc = ["""<option value="tab_mag_odfnew/tab_mag_""",
-             """<option selected="selected" value="tab_mag_odfnew/tab_mag_""",
+             """<option selected="" value="tab_mag_odfnew/tab_mag_""",
              "</option>", "<i>", "</i>", "<sub>", "</sub>"]
 
     i = 0
@@ -38,6 +38,7 @@ def frmtFile(now_time, version, systs):
                 sr = sr.replace(_, "")
             sr = [_.strip() for _ in sr.split(""".dat">""")]
             if sr[0] != "":
+                # print(sr)
                 f.write("{:<8}{:<40}{}\n".format(i, *sr))
                 i += 1
 

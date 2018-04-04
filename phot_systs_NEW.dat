@@ -1,6 +1,6 @@
 # Photometric Systems, CMD 3.0
 #
-# Retrieved: 2017-11-07 12:13:18
+# Retrieved: 2018-03-16 16:22:47
 #
 # ID    CMD_ID                                  Photometric system
 #
@@ -43,7 +43,7 @@
 36      int_wfc                                 INT/WFC (Vegamag)
 37      iphas                                   IPHAS
 38      jwst_miri_wide                          JWST MIRI wide filters, Vegamags
-39      jwst_wide                               JWST NIRCam wide filters, Vegamags
+39      jwst_nircam_wide                        JWST NIRCam wide+verywide filters, Vegamags
 40      kepler                                  Kepler + SDSS griz + DDO51 (in ABmags)
 41      kepler_2mass                            Kepler + SDSS griz + DDO51 (in ABmags) + 2MASS (~Vegamag)
 42      lbt_lbc                                 LBT/LBC (Vegamag)
@@ -63,11 +63,12 @@
 56      TESS_2mass                              TESS + 2MASS (Vegamags)
 57      TESS_2mass_kepler                       TESS + 2MASS (Vegamags) + Kepler + SDSS griz + DDO51 (in ABmags)
 58      ukidss                                  UKIDSS ZYJHK (Vegamag)
-59      visir                                   VISIR
-60      vista                                   VISTA ZYJHKs (Vegamag)
-61      vphas                                   VPHAS+ (ABmags)
-62      vst_omegacam                            VST/OMEGACAM (ABmag)
-63      vilnius                                 Vilnius
-64      wfirst_proposed2017                     WFIRST proposed filters, Vegamags
-65      washington_ddo51                        Washington CMT1T2 + DDO51
-66      deltaa                                  deltaa (Paunzen) + UBV (Maiz-Apellaniz), in Vegamags
+59      uvit                                    UVIT (all ABmags)
+60      visir                                   VISIR
+61      vista                                   VISTA ZYJHKs (Vegamag)
+62      vphas                                   VPHAS+ (ABmags)
+63      vst_omegacam                            VST/OMEGACAM (ABmag)
+64      vilnius                                 Vilnius
+65      wfirst_proposed2017                     WFIRST proposed filters, Vegamags
+66      washington_ddo51                        Washington CMT1T2 + DDO51
+67      deltaa                                  deltaa (Paunzen) + UBV (Maiz-Apellaniz), in Vegamags

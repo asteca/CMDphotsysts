@@ -1,6 +1,6 @@
-# Photometric Systems, CMD 3.0
+# Photometric Systems, CMD 3.1
 #
-# Retrieved: 2018-06-28 15:50:19
+# Retrieved: 2018-10-30 15:59:32
 #
 # ID    CMD_ID                                  Photometric system
 #
@@ -25,53 +25,56 @@
 18      eis                                     ESO/EIS (WFI UBVRIZ + SOFI JHK)
 19      wfi                                     ESO/WFI
 20      wfi2                                    ESO/WFI2
-21      galex_sloan                             GALEX FUV+NUV (Vegamag) + SDSS ugriz (ABmags)
-22      galex                                   GALEX FUV+NUV + Johnson's UBV (Maiz-Apellaniz version), all Vegamags
-23      gaia_tycho2_2mass                       Gaia DR1 + Tycho2 + 2MASS (all Vegamags)
-24      gaiaDR2_tycho2_2mass                    Gaia DR2 + Tycho2 + 2MASS (all Vegamags)
-25      gaia                                    Gaia's DR1 G, G_BP and G_RP (Vegamags)
-26      gaiaDR2                                 Gaia's DR2 G, G_BP and G_RP (Vegamags)
-27      UVbright                                HST+GALEX+Swift/UVOT UV filters
-28      acs_hrc                                 HST/ACS HRC
-29      acs_wfc                                 HST/ACS WFC
-30      nicmosab                                HST/NICMOS AB
-31      nicmosvega                              HST/NICMOS Vega
-32      stis                                    HST/STIS imaging mode, Vegamag
-33      wfc3_wideverywide                       HST/WFC3 all W+LP+X filters (UVIS1+IR, final throughputs)
-34      wfc3_verywide                           HST/WFC3 long-pass and extremely wide filters (UVIS1, final throughputs)
-35      wfc3_medium                             HST/WFC3 medium filters (UVIS1+IR, final throughputs)
-36      wfc3_wide                               HST/WFC3 wide filters (UVIS1+IR, final throughputs)
-37      wfpc2                                   HST/WFPC2 (Vegamag, cf. Holtzman et al. 1995)
-38      int_wfc                                 INT/WFC (Vegamag)
-39      iphas                                   IPHAS
-40      jwst_miri_wide                          JWST MIRI wide filters, Vegamags
-41      jwst_nircam_wide                        JWST NIRCam wide+verywide filters, Vegamags
-42      jwst_nircam_widemedium                  JWST NIRCam wide+verywide+medium filters, Vegamags
-43      kepler                                  Kepler + SDSS griz + DDO51 (in ABmags)
-44      kepler_2mass                            Kepler + SDSS griz + DDO51 (in ABmags) + 2MASS (~Vegamag)
-45      lbt_lbc                                 LBT/LBC (Vegamag)
-46      lsst_wfirst_proposed2017                LSST (ABmags) + WFIRST proposed filters (Vegamags)
-47      lsst                                    LSST ugrizY, March 2012 total filter throughputs (all ABmags)
-48      noao_ctio_mosaic2                       NOAO/CTIO/MOSAIC2 (Vegamag)
-49      ogle                                    OGLE-II
-50      panstarrs1                              Pan-STARRS1
-51      splus                                   S-PLUS (Vegamags), revised on Nov. 2017
-52      sloan                                   SDSS ugriz
-53      sloan_2mass                             SDSS ugriz + 2MASS JHKs
-54      sloan_ukidss                            SDSS ugriz + UKIDSS ZYJHK
-55      swift_uvot                              SWIFT/UVOT UVW2, UVM2, UVW1,u (Vegamag)
-56      spitzer                                 Spitzer IRAC+MIPS
-57      stroemgren                              Stroemgren-Crawford
-58      suprimecam                              Subaru/Suprime-Cam (ABmags)
-59      TESS_2mass                              TESS + 2MASS (Vegamags)
-60      TESS_2mass_kepler                       TESS + 2MASS (Vegamags) + Kepler + SDSS griz + DDO51 (in ABmags)
-61      ukidss                                  UKIDSS ZYJHK (Vegamag)
-62      uvit                                    UVIT (all ABmags)
-63      visir                                   VISIR
-64      vista                                   VISTA ZYJHKs (Vegamag)
-65      vphas                                   VPHAS+ (ABmags)
-66      vst_omegacam                            VST/OMEGACAM (ABmag)
-67      vilnius                                 Vilnius
-68      wfirst_proposed2017                     WFIRST proposed filters, Vegamags
-69      washington_ddo51                        Washington CMT1T2 + DDO51
-70      deltaa                                  deltaa (Paunzen) + UBV (Maiz-Apellaniz), in Vegamags
+21      euclid_nisp                             Euclid/NISP (ABmags)
+22      galex_sloan                             GALEX FUV+NUV (Vegamag) + SDSS ugriz (ABmags)
+23      galex                                   GALEX FUV+NUV + Johnson's UBV (Maiz-Apellaniz version), all Vegamags
+24      gaia_tycho2_2mass                       Gaia DR1 + Tycho2 + 2MASS (all Vegamags)
+25      gaiaDR2_tycho2_2mass                    Gaia DR2 + Tycho2 + 2MASS (all Vegamags, Gaia passbands from Evans et al. 2018)
+26      gaiaDR2weiler_tycho2_2mass              Gaia DR2 + Tycho2 + 2MASS (all Vegamags, Gaia passbands from Weiler 2018)
+27      gaia                                    Gaia's DR1 G, G_BP and G_RP (Vegamags)
+28      gaiaDR2                                 Gaia's DR2 G, G_BP and G_RP (Vegamags, Gaia passbands from Evans et al. 2018)
+29      gaiaDR2weiler                           Gaia's DR2 G, G_BP and G_RP (Vegamags, Gaia passbands from Weiler 2018)
+30      UVbright                                HST+GALEX+Swift/UVOT UV filters
+31      acs_hrc                                 HST/ACS HRC
+32      acs_wfc                                 HST/ACS WFC
+33      nicmosab                                HST/NICMOS AB
+34      nicmosvega                              HST/NICMOS Vega
+35      stis                                    HST/STIS imaging mode, Vegamag
+36      wfc3_wideverywide                       HST/WFC3 all W+LP+X filters (UVIS1+IR, final throughputs)
+37      wfc3_verywide                           HST/WFC3 long-pass and extremely wide filters (UVIS1, final throughputs)
+38      wfc3_medium                             HST/WFC3 medium filters (UVIS1+IR, final throughputs)
+39      wfc3_wide                               HST/WFC3 wide filters (UVIS1+IR, final throughputs)
+40      wfpc2                                   HST/WFPC2 (Vegamag, cf. Holtzman et al. 1995)
+41      int_wfc                                 INT/WFC (Vegamag)
+42      iphas                                   IPHAS
+43      jwst_miri_wide                          JWST MIRI wide filters, Vegamags
+44      jwst_nircam_wide                        JWST NIRCam wide+verywide filters, Vegamags
+45      jwst_nircam_widemedium                  JWST NIRCam wide+verywide+medium filters, Vegamags
+46      kepler                                  Kepler + SDSS griz + DDO51 (in ABmags)
+47      kepler_2mass                            Kepler + SDSS griz + DDO51 (in ABmags) + 2MASS (~Vegamag)
+48      lbt_lbc                                 LBT/LBC (Vegamag)
+49      lsst_wfirst_proposed2017                LSST (ABmags) + WFIRST proposed filters (Vegamags)
+50      lsst                                    LSST ugrizY, March 2012 total filter throughputs (all ABmags)
+51      noao_ctio_mosaic2                       NOAO/CTIO/MOSAIC2 (Vegamag)
+52      ogle                                    OGLE-II
+53      panstarrs1                              Pan-STARRS1
+54      splus                                   S-PLUS (Vegamags), revised on Nov. 2017
+55      sloan                                   SDSS ugriz
+56      sloan_2mass                             SDSS ugriz + 2MASS JHKs
+57      sloan_ukidss                            SDSS ugriz + UKIDSS ZYJHK
+58      swift_uvot                              SWIFT/UVOT UVW2, UVM2, UVW1,u (Vegamag)
+59      spitzer                                 Spitzer IRAC+MIPS
+60      stroemgren                              Stroemgren-Crawford
+61      suprimecam                              Subaru/Suprime-Cam (ABmags)
+62      TESS_2mass                              TESS + 2MASS (Vegamags)
+63      TESS_2mass_kepler                       TESS + 2MASS (Vegamags) + Kepler + SDSS griz + DDO51 (in ABmags)
+64      ukidss                                  UKIDSS ZYJHK (Vegamag)
+65      uvit                                    UVIT (all ABmags)
+66      visir                                   VISIR
+67      vista                                   VISTA ZYJHKs (Vegamag)
+68      vphas                                   VPHAS+ (ABmags)
+69      vst_omegacam                            VST/OMEGACAM (ABmag)
+70      vilnius                                 Vilnius
+71      wfirst_proposed2017                     WFIRST proposed filters, Vegamags
+72      washington_ddo51                        Washington CMT1T2 + DDO51
+73      deltaa                                  deltaa (Paunzen) + UBV (Maiz-Apellaniz), in Vegamags

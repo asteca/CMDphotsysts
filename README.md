@@ -10,4 +10,4 @@ Requires `requests` and `beautifulsoup4` packages, install with:
 Also requires `lxml`:
 
     $ conda activate ENV
-    $ pip install lxml
+    $ conda install lxml

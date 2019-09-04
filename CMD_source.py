@@ -30,11 +30,10 @@ def main():
         if data is not None:
             flo.append(data)
 
-    CMDsystsFile(now_time, version, syst_ids, flo)
-
     # Create properly formatted file.
-    photSystsFile(now_time, version, syst_ids, syst_names, flo)
-    # # Check for changes.
+    CMDsystsFile(now_time, version, syst_ids, syst_names, flo)
+
+    # Check for changes.
     versionsCompare()
 
 
@@ -145,37 +144,20 @@ def outPage(phot_syst):
     return filters, lambdas, omegas
 
 
-def CMDsystsFile(now_time, version, syst_ids, flo):
+def CMDsystsFile(now_time, version, syst_ids, syst_names, flo):
     """
     """
-    with open("CMD_systs.dat", "w") as f:
+    with open("CMD_systs_NEW.dat", "w") as f:
         f.write("#\n# Photometric Systems, {}\n".format(
             version.string.replace(" input form", "")))
         f.write("#\n# Retrieved: {}\n#\n".format(now_time))
-        f.write("#{:<3} {:<50} {}   {}   {}\n".format(
-            "ID", "System ID", "Filters", "Lambdas", "Omegas"))
+        f.write("#{:<4}{:<100}{:<50}{:<260}{:<260}{:<260}\n".format(
+            "ID", "Photometric system", "System ID", "Filters", "Lambdas",
+            "Omegas"))
         for i, s in enumerate(flo):
-            f.write("{:<3}  {:<50} {}   {}   {}\n".format(
-                i, syst_ids[i], "  ".join(s[0]), "  ".join(s[1]),
-                "  ".join(s[2])))
-
-
-def photSystsFile(now_time, version, syst_ids, syst_names, flo):
-    """
-    Create the new (most recent) version of the photometric systems file.
-    """
-
-    with open("phot_systs_NEW.dat", "w") as f:
-        f.write("#\n# Photometric Systems, {}\n".format(
-            version.string.replace(" input form", "")))
-        f.write("#\n# Retrieved: {}\n#\n".format(now_time))
-        f.write("#{:<3} {:<40}{:<120}{}\n".format(
-            "ID", "System ID", "Photometric system", "Filters"))
-        for i, sid in enumerate(syst_ids):
-            f.write("{:<3}  {:<40}{:<120}{}\n".format(
-                i, sid, syst_names[i], "   ".join(flo[i][0])))
-
-    return syst_names
+            f.write("{:<5}{:<100}{:<50}{:<260}{:<260}{:<260}\n".format(
+                i, syst_names[i], syst_ids[i], "  ".join(s[0]),
+                "  ".join(s[1]), "  ".join(s[2])))
 
 
 def versionsCompare():
@@ -183,14 +165,14 @@ def versionsCompare():
     Check if new version is different from the old one.
     """
     # Check if 'OLD' version of the file exists.
-    oldExst = os.path.isfile("phot_systs_OLD.dat")
+    oldExst = os.path.isfile("CMD_systs_OLD.dat")
 
     if oldExst:
-        with open("phot_systs_NEW.dat", "r") as f:
+        with open("CMD_systs_NEW.dat", "r") as f:
             newFile = f.readlines()
         # Remove commented lines.
         newFile = [_ for _ in newFile if not _.startswith('#')]
-        with open("phot_systs_OLD.dat", "r") as f:
+        with open("CMD_systs_OLD.dat", "r") as f:
             oldFile = f.readlines()
         oldFile = [_ for _ in oldFile if not _.startswith('#')]
         if newFile == oldFile:
@@ -199,7 +181,7 @@ def versionsCompare():
             print("New version contains changes.")
     else:
         print("No 'OLD' file present.")
-        os.rename("phot_systs_NEW.dat", "phot_systs_OLD.dat")
+        os.rename("CMD_systs_NEW.dat", "CMD_systs_OLD.dat")
 
 
 if __name__ == '__main__':

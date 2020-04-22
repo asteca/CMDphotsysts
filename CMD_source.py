@@ -6,6 +6,9 @@ import re
 import os
 
 
+webserver = 'http://stev.oapd.inaf.it'
+
+
 def main():
     """
     Retrieves an updated list of photometric systems defined in the CMD
@@ -24,7 +27,7 @@ def main():
 
     # Create data file with effective lambdas and omegas for each filter, for
     # each photometric system defined.
-    flo = []  # filters, lambdas, omegas
+    flo = []
     for syst in syst_ids:
         data = outPage(syst)
         if data is not None:
@@ -112,34 +115,36 @@ def outPage(phot_syst):
 
     print("  Fetching '{}'".format(phot_syst))
 
-    # TODO remove when 'decam_vista' system supports 'YBC'
-    if phot_syst == 'decam_vista':
-        d['photsys_version'] = (None, "odfnew")
-    else:
-        d['photsys_version'] = (None, "YBC")
-
-    webserver = 'http://stev.oapd.inaf.it'
     c = requests.post(webserver + '/cgi-bin/cmd', files=d).text
 
-    try:
-        # Extract filters, lambdas, and omegas data
-        aa = re.compile('Filter.*<th>&lambda')
-        fname = aa.findall(c)
-        # In CMD v3.2 apparently all filters have a 'mag' added.
-        filters = [
-            _.split('</td>')[0] + 'mag' for _ in fname[0].split('<td>')][1:]
-        aa = re.compile('lambda.*omega')
-        fname = aa.findall(c)
-        lambdas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
-        aa = re.compile('omega.*lambda')
-        fname = aa.findall(c)
-        omegas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
-    except Exception as err:
-        # print(err)
-        err_i = c.index("errorwarning")
-        txt = c[err_i + 17:err_i + 17 + 100]
-        print('\n' + txt.split("<br>")[0].replace("</b>", ""), '\n')
-        return None
+    # Re-download systems not available among YBC tables
+    error_msg = ("Photometric system {} still not available among YBC " +
+                 "tables.").format(phot_syst)
+    if error_msg in c:
+        print("   " + error_msg)
+        d['photsys_version'] = (None, "odfnew")
+        c = requests.post(webserver + '/cgi-bin/cmd', files=d).text
+
+    # try:
+    # Extract filters, lambdas, and omegas data
+    aa = re.compile('Filter.*<th>&lambda')
+    fname = aa.findall(c)
+    # In CMD v3.2 apparently all filters have a 'mag' added.
+    filters = [
+        _.split('</td>')[0] + 'mag' for _ in fname[0].split('<td>')][1:]
+    aa = re.compile('lambda.*omega')
+    fname = aa.findall(c)
+    lambdas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
+    aa = re.compile('omega.*lambda')
+    fname = aa.findall(c)
+    omegas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
+
+    # except Exception as err:
+    #     # print(err)
+    #     err_i = c.index("errorwarning")
+    #     txt = c[err_i + 17:err_i + 17 + 100]
+    #     print('\n' + txt.split("<br>")[0].replace("</b>", ""), '\n')
+    #     return None
 
     return filters, lambdas, omegas
 

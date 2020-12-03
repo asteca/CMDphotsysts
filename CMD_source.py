@@ -12,11 +12,7 @@ webserver = 'http://stev.oapd.inaf.it'
 def main():
     """
     Retrieves an updated list of photometric systems defined in the CMD
-    service.
-    Store final data in 'phot_systs_NEW.dat' file, and compare with the 'OLD'
-    version stored.
-
-    Also generates the 'CMD_systs.dat' file that ASteCa uses.
+    service. Store final data in 'CMD_systs.dat' file used by ASteCA.
     """
     # Actual date/time
     now_time = strftime("%Y-%m-%d %H:%M:%S")
@@ -36,8 +32,10 @@ def main():
     # Create properly formatted file.
     CMDsystsFile(now_time, version, syst_ids, syst_names, flo)
 
-    # Check for changes.
-    versionsCompare()
+    print("Finished")
+
+    # # Check for changes.
+    # versionsCompare()
 
 
 def downlData():
@@ -84,7 +82,8 @@ def outPage(phot_syst):
         "eta_reimers": (None, "0.2"),
         "kind_interp": (None, "1"),
         "kind_postagb": (None, "-1"),
-        "photsys_version": (None, "YBC"),
+        # Use OBC by default, apparently it exists for all systems
+        "photsys_version": (None, "odfnew"),
         "dust_sourceM": (None, "dpmod60alox40"),
         "dust_sourceC": (None, "AMCSIC15"),
         "kind_mag": (None, "2"),
@@ -103,7 +102,8 @@ def outPage(phot_syst):
         "lf_deltamag": (None, "0.5"),
         "sim_mtot": (None, "1.0e4"),
         "track_parsec": (None, "parsec_CAF09_v1.2S"),
-        "track_colibri": (None, "parsec_CAF09_v1.2S_S35"),
+        # Use the latest CS37 tracks
+        "track_colibri": (None, "parsec_CAF09_v1.2S_S_LMC_08_web"),
         'isoc_zlow': (None, "0.0152"),
         'isoc_lagelow': (None, "6.6"),
         'isoc_lageupp': (None, "10.13"),
@@ -117,34 +117,34 @@ def outPage(phot_syst):
 
     c = requests.post(webserver + '/cgi-bin/cmd', files=d).text
 
-    # Re-download systems not available among YBC tables
-    error_msg = ("Photometric system {} still not available among YBC " +
-                 "tables.").format(phot_syst)
-    if error_msg in c:
-        print("   " + error_msg)
-        d['photsys_version'] = (None, "odfnew")
-        c = requests.post(webserver + '/cgi-bin/cmd', files=d).text
+    # # Re-download systems not available among YBC tables
+    # error_msg = ("Photometric system {} still not available among YBC " +
+    #              "tables.").format(phot_syst)
+    # if error_msg in c:
+    #     print("   " + error_msg)
+    #     d['photsys_version'] = (None, "odfnew")
+    #     c = requests.post(webserver + '/cgi-bin/cmd', files=d).text
 
-    # try:
-    # Extract filters, lambdas, and omegas data
-    aa = re.compile('Filter.*<th>&lambda')
-    fname = aa.findall(c)
-    # In CMD v3.2 apparently all filters have a 'mag' added.
-    filters = [
-        _.split('</td>')[0] + 'mag' for _ in fname[0].split('<td>')][1:]
-    aa = re.compile('lambda.*omega')
-    fname = aa.findall(c)
-    lambdas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
-    aa = re.compile('omega.*lambda')
-    fname = aa.findall(c)
-    omegas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
+    try:
+        # Extract filters, lambdas, and omegas data
+        aa = re.compile('Filter.*<th>&lambda')
+        fname = aa.findall(c)
+        # In CMD v3.2 apparently all filters have a 'mag' added.
+        filters = [
+            _.split('</td>')[0] + 'mag' for _ in fname[0].split('<td>')][1:]
+        aa = re.compile('lambda.*omega')
+        fname = aa.findall(c)
+        lambdas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
+        aa = re.compile('omega.*lambda')
+        fname = aa.findall(c)
+        omegas = [_.split('</td>')[0] for _ in fname[0].split('<td>')][1:]
 
-    # except Exception as err:
-    #     # print(err)
-    #     err_i = c.index("errorwarning")
-    #     txt = c[err_i + 17:err_i + 17 + 100]
-    #     print('\n' + txt.split("<br>")[0].replace("</b>", ""), '\n')
-    #     return None
+    except:  #  Exception as err:
+        # print(err)
+        err_i = c.index("errorwarning")
+        txt = c[err_i + 17:err_i + 17 + 100]
+        print("    " + txt.split("<br>")[0].replace("</b>", ""))
+        return None
 
     return filters, lambdas, omegas
 
@@ -152,7 +152,7 @@ def outPage(phot_syst):
 def CMDsystsFile(now_time, version, syst_ids, syst_names, flo):
     """
     """
-    with open("CMD_systs_NEW.dat", "w") as f:
+    with open("CMD_systs.dat", "w") as f:
         f.write("#\n# Photometric Systems, {}\n".format(
             version.string.replace(" input form", "")))
         f.write("#\n# Retrieved: {}\n#\n".format(now_time))
@@ -165,28 +165,28 @@ def CMDsystsFile(now_time, version, syst_ids, syst_names, flo):
                 "  ".join(s[1]), "  ".join(s[2])))
 
 
-def versionsCompare():
-    """
-    Check if new version is different from the old one.
-    """
-    # Check if 'OLD' version of the file exists.
-    oldExst = os.path.isfile("CMD_systs_OLD.dat")
+# def versionsCompare():
+#     """
+#     Check if new version is different from the old one.
+#     """
+#     # Check if 'OLD' version of the file exists.
+#     oldExst = os.path.isfile("CMD_systs_OLD.dat")
 
-    if oldExst:
-        with open("CMD_systs_NEW.dat", "r") as f:
-            newFile = f.readlines()
-        # Remove commented lines.
-        newFile = [_ for _ in newFile if not _.startswith('#')]
-        with open("CMD_systs_OLD.dat", "r") as f:
-            oldFile = f.readlines()
-        oldFile = [_ for _ in oldFile if not _.startswith('#')]
-        if newFile == oldFile:
-            print("No changes in new version.")
-        else:
-            print("New version contains changes.")
-    else:
-        print("No 'OLD' file present.")
-        os.rename("CMD_systs_NEW.dat", "CMD_systs_OLD.dat")
+#     if oldExst:
+#         with open("CMD_systs_NEW.dat", "r") as f:
+#             newFile = f.readlines()
+#         # Remove commented lines.
+#         newFile = [_ for _ in newFile if not _.startswith('#')]
+#         with open("CMD_systs_OLD.dat", "r") as f:
+#             oldFile = f.readlines()
+#         oldFile = [_ for _ in oldFile if not _.startswith('#')]
+#         if newFile == oldFile:
+#             print("No changes in new version.")
+#         else:
+#             print("New version contains changes.")
+#     else:
+#         print("No 'OLD' file present.")
+#         os.rename("CMD_systs_NEW.dat", "CMD_systs_OLD.dat")
 
 
 if __name__ == '__main__':
